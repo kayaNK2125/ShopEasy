@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShopEasy - E-Commerce</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <header>
+        <nav>
+            <div class="nav-logo">🛍️ ShopEasy</div>
+            <div class="nav-links">
+               <a href="index.html"> <button class="nav-btn ">HOME</button> </a>
+                <button class="nav-btn">FASHION</button>
+                <button class="nav-btn">ELECTRONICS</button>
+                <button class="nav-btn">WIRELESS</button>
+                <button class="nav-btn">CONTACT-US</button>
+            </div>
+            <div class="nav-icons">
+               <a href="cart.html"><button class="cart-btn">🛒 <span class="cart-count">0</span></button></a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Shop the Best Deals</h1>
+            <p>Discover thousands of products at unbeatable prices</p>
+            <button class="hero-btn">Shop Now</button>
+        </div>
+    </section>
+
+    <!-- PRODUCTS SECTION -->
+    <section class="products-section">
+        <h2 class="section-title">Featured Products</h2>
+        <div class="products-grid" id="products-grid">
+            <!-- Products will load from API -->
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>© 2025 ShopEasy. All rights reserved.</p>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>

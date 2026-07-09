@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cart - ShopEasy</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="nav-logo">🛍️ ShopEasy</div>
+            <div class="nav-links">
+                <a href="index.html"> <button class="nav-btn ">HOME</button> </a>
+                <button class="nav-btn">FASHION</button>
+                <button class="nav-btn">ELECTRONICS</button>
+                <button class="nav-btn">WIRELESS</button>
+                <button class="nav-btn">CONTACT-US</button>
+            </div>
+        </nav>
+    </header>
+
+    <section class="cart-section">
+        <h2>Your Cart</h2>
+        <div id="cart-items">
+            <!-- cart items yahan load honge -->
+        </div>
+        <div class="cart-total">
+            <h3>Total: ₹<span id="total-price">0</span></h3>
+            <button class="hero-btn" onclick="placeOrder()">Place Order</button>
+        </div>
+    </section>
+
+    <script src="cart.js"></script>
+</body>
+</html>

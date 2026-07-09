@@ -1,0 +1,1 @@
+{"products":[{"id":1,"name":"Shoes","price":999},{"id":2,"name":"Voilen","price":"399"}],"users":[{"id":1,"name":"shaym","gender":"male"},{"id":2,"name":"ram","gender":"male"}],"orders":[{"id":1,"userId":1,"productId":2,"quantity":1,"status":"pending"}]}
