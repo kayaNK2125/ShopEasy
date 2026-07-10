@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - ShopEasy</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <header>
+        <nav>
+            <div class="nav-logo">🛍️ ShopEasy</div>
+            <div class="nav-links">
+                <a href="index.html"><button class="nav-btn">HOME</button></a>
+                <button class="nav-btn">FASHION</button>
+                <button class="nav-btn">ELECTRONICS</button>
+                <button class="nav-btn">WIRELESS</button>
+                <button class="nav-btn">CONTACT-US</button>
+            </div>
+             <div class="nav-icons">
+               <a href="cart.html"><button class="cart-btn">🛒 <span class="cart-count">0</span></button></a>
+                <a href="login.html"><button class="login-nav-btn">Login</button></a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- AUTH SECTION -->
+    <section class="auth-section">
+
+        <!-- LOGIN FORM -->
+        <div class="auth-card" id="login-card">
+            <h2>Welcome Back 👋</h2>
+            <p class="auth-subtitle">Login to your account</p>
+
+            <div class="form-group">
+                <label>Name</label>
+                <input type="text" id="login-name" placeholder="Enter your name" />
+            </div>
+            <div class="form-group">
+                <label>Gender</label>
+                <select id="login-gender">
+                    <option value="">Select gender</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+
+            <button class="auth-btn" onclick="login()">Login</button>
+            <p class="switch-text">Don't have an account?
+                <span onclick="showRegister()">Register here</span>
+            </p>
+        </div>
+
+        <!-- REGISTER FORM -->
+        <div class="auth-card" id="register-card" style="display:none;">
+            <h2>Create Account 🚀</h2>
+            <p class="auth-subtitle">Join ShopEasy today</p>
+
+            <div class="form-group">
+                <label>Name</label>
+                <input type="text" id="reg-name" placeholder="Enter your name" />
+            </div>
+            <div class="form-group">
+                <label>Gender</label>
+                <select id="reg-gender">
+                    <option value="">Select gender</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+
+            <button class="auth-btn" onclick="register()">Create Account</button>
+            <p class="switch-text">Already have an account?
+                <span onclick="showLogin()">Login here</span>
+            </p>
+        </div>
+
+    </section>
+
+    <script src="login.js"></script>
+</body>
+</html>
