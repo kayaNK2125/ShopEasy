@@ -141,10 +141,13 @@ nav {
 .product-card {
     background: white;
     border-radius: 16px;
-    padding: 1.5rem;
+    padding: 1.2rem;
     box-shadow: 0 4px 20px rgba(0,0,0,0.08);
     transition: all 0.3s ease;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .product-card:hover {
@@ -154,14 +157,22 @@ nav {
 
 .product-img {
     width: 100%;
-    height: 180px;
+    height: 160px;
     background: linear-gradient(135deg, #f0f0f0, #e0e0e0);
     border-radius: 12px;
-    margin-bottom: 1rem;
+    margin-bottom: 0.8rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 4rem;
+    font-size: 3rem;
+    overflow: hidden;
+}
+
+.product-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 12px;
 }
 
 .product-name {
@@ -368,4 +379,30 @@ footer {
 
 .login-nav-btn:hover {
     background: #5a52d5;
+}
+
+header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.product-desc {
+    font-size: 0.85rem;
+    color: #888;
+    margin-bottom: 0.5rem;
+}
+
+.product-rating {
+    font-size: 0.9rem;
+    color: #f39c12;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+.product-stock {
+    font-size: 0.8rem;
+    color: #27ae60;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
 }

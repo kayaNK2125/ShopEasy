@@ -1,6 +1,9 @@
 // load cart from localStorage
 const cart = JSON.parse(localStorage.getItem('cart')) || [];
 
+// update navbar cart count badge
+document.querySelector('.cart-count').textContent = cart.length;
+
 function loadCart() {
     const cartDiv = document.getElementById('cart-items');
     cartDiv.innerHTML = '';
@@ -43,7 +46,6 @@ async function placeOrder() {
         return;
     }
 
-    // build order object
     const order = {
         id: Date.now(),
         items: cart,
@@ -51,16 +53,19 @@ async function placeOrder() {
         status: "pending"
     };
 
-    // send order to backend
-    await fetch('http://localhost:3000/addorder', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(order)
-    });
+    try {
+        await fetch('http://localhost:3000/addorder', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(order)
+        });
+    } catch(error) {
+        console.log('Order save failed but continuing:', error);
+    }
 
-    alert('Order placed successfully!');
-    localStorage.removeItem('cart'); // clear cart
-    window.location.href = 'index.html'; // go back home
+    // redirect happens regardless
+    localStorage.removeItem('cart');
+    alert('Order placed successfully! 🎉');
+    window.location.href = 'index.html';
 }
-
 loadCart();

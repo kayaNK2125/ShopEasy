@@ -15,10 +15,10 @@
             <div class="nav-logo">🛍️ ShopEasy</div>
             <div class="nav-links">
                 <a href="index.html"><button class="nav-btn">HOME</button></a>
-                <button class="nav-btn">FASHION</button>
-                <button class="nav-btn">ELECTRONICS</button>
-                <button class="nav-btn">WIRELESS</button>
-                <button class="nav-btn">CONTACT-US</button>
+                <a href="index.html"><button class="nav-btn">FASHION</button></a>
+                <a href="index.html"><button class="nav-btn">ELECTRONICS</button></a>
+                <a href="index.html"><button class="nav-btn">WIRELESS</button></a>
+                <a href="contact.html"><button class="nav-btn">CONTACT-US</button></a>
             </div>
              <div class="nav-icons">
                <a href="cart.html"><button class="cart-btn">🛒 <span class="cart-count">0</span></button></a>
@@ -82,6 +82,11 @@
 
     </section>
 
+    <script>
+        // update navbar cart count from localStorage
+        const _cart = JSON.parse(localStorage.getItem('cart')) || [];
+        document.querySelector('.cart-count').textContent = _cart.length;
+    </script>
     <script src="login.js"></script>
 </body>
 </html>
