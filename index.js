@@ -1,137 +1,166 @@
 const express = require('express');
-const app = express();
-const fs = require('fs'); 
-
-app.use(express.json());
-
+const mongoose = require('mongoose');
 const cors = require('cors');
-app.use(cors()); 
+require('dotenv').config();
 
-app.get('/', (req, res) => {
-  res.send('Ecommerce API is running');
+const app = express();
+app.use(express.json());
+app.use(cors());
+
+// connect to MongoDB Atlas
+mongoose.connect(process.env.MONGO_URI)
+    .then(() => console.log('Connected to MongoDB Atlas!'))
+    .catch(err => console.log('MongoDB connection error:', err));
+
+// =====================
+// SCHEMAS & MODELS
+// =====================
+
+const productSchema = new mongoose.Schema({
+    id: Number,
+    name: String,
+    price: Number,
+    category: String,
+    description: String,
+    rating: Number,
+    stock: Number,
+    image: String
 });
 
-//READ - ALL
-app.get('/products', (req, res) => {
-  const data = fs.readFileSync('./data.json', 'utf-8'); 
-  const parsed = JSON.parse(data);  
-  res.json(parsed.products);  
+const userSchema = new mongoose.Schema({
+    id: Number,
+    name: String,
+    email: String,
+    phone: String,
+    password: String,
+    gender: String
 });
 
-//READ - Single by id
-app.get('/products/:id', (req, res) => {
-  const data = fs.readFileSync('./data.json', 'utf-8');
-  const parsed = JSON.parse(data);   
-  const product = parsed.products.find(p => p.id == req.params.id);
-  if (!product) 
-    return res.status(404).send('Product not found'); 
-  res.json(product);
+const orderSchema = new mongoose.Schema({
+    id: Number,
+    items: Array,
+    total: Number,
+    status: String
 });
 
-//CREATE 
-app.post('/addproduct', (req, res) => {
-  const data = fs.readFileSync('./data.json', 'utf-8');
-  const parsed = JSON.parse(data);
-  parsed.products.push(req.body);
-  fs.writeFileSync('./data.json', JSON.stringify(parsed));
-  res.send('Product added!');
+const Product = mongoose.model('Product', productSchema);
+const User = mongoose.model('User', userSchema);
+const Order = mongoose.model('Order', orderSchema);
+
+// =====================
+// PRODUCT ROUTES
+// =====================
+
+// READ - all products
+app.get('/products', async (req, res) => {
+    const products = await Product.find();
+    res.json(products);
 });
 
-// DELETE - product id
-app.delete('/products/:id', (req, res) => {
-  const data = fs.readFileSync('./data.json', 'utf-8');
-  const parsed = JSON.parse(data);
-  parsed.products = parsed.products.filter(p => p.id!= req.params.id); 
-  fs.writeFileSync('./data.json', JSON.stringify(parsed));
-  res.send('Product deleted!');
+// READ - single product by id
+app.get('/products/:id', async (req, res) => {
+    const product = await Product.findOne({ id: req.params.id });
+    if (!product) return res.status(404).send('Product not found');
+    res.json(product);
 });
 
-// UPDATE - id
-app.put('/products/:id', (req, res) => {
-  const data = fs.readFileSync('./data.json', 'utf-8');
-  const parsed = JSON.parse(data);
-  const index = parsed.products.findIndex(p => p.id == req.params.id); 
-  if (index === -1) 
-    return res.status(404).send('Product not found');
-  parsed.products[index] = { ...parsed.products[index], ...req.body }; 
-  fs.writeFileSync('./data.json', JSON.stringify(parsed));
-  res.send('Product updated!');
+// CREATE - add product
+app.post('/addproduct', async (req, res) => {
+    const product = new Product(req.body);
+    await product.save();
+    res.send('Product added!');
 });
 
-
-app.get('/contactus', (req, res) => {
-  res.json('This is Contact-Us page');
+// UPDATE - edit product by id
+app.put('/products/:id', async (req, res) => {
+    const product = await Product.findOneAndUpdate(
+        { id: req.params.id },
+        req.body,
+        { new: true }
+    );
+    if (!product) return res.status(404).send('Product not found');
+    res.send('Product updated!');
 });
 
-//READ - ALL
-app.get ('/users', (req,res) => {
-    const data = fs.readFileSync('./data.json', 'utf-8');
-    const parsed = JSON.parse(data);
-    res.send(parsed.users);
+// DELETE - remove product by id
+app.delete('/products/:id', async (req, res) => {
+    await Product.findOneAndDelete({ id: req.params.id });
+    res.send('Product deleted!');
 });
 
-//READ - Single by id
-app.get('/users/:id', (req , res) => {
-    const data = fs.readFileSync('./data.json' , 'utf-8');
-    const parsed = JSON.parse(data);
-    const users = parsed.users.find(p => p.id == req.params.id);
-    if(!users) 
-      return res.status(404).send('User not found');
+// =====================
+// USER ROUTES
+// =====================
+
+// READ - all users
+app.get('/users', async (req, res) => {
+    const users = await User.find();
     res.json(users);
 });
 
-//CREATE
-app.post ('/adduser', (req,res) =>{
-      const data = fs.readFileSync('./data.json', 'utf-8');
-    const parse_data = JSON.parse(data);
-    parse_data.users.push(req.body);  
-    fs.writeFileSync('./data.json', JSON.stringify(parse_data)) 
-    res.send("Student has been added !")
-})
+// READ - single user by id
+app.get('/users/:id', async (req, res) => {
+    const user = await User.findOne({ id: req.params.id });
+    if (!user) return res.status(404).send('User not found');
+    res.json(user);
+});
 
-//DELETE - user id
-app.delete('/users/:id', (req,res) => {
-    const data = fs.readFileSync('./data.json', 'utf-8');
-    const parsed = JSON.parse(data);
-    parsed.users = parsed.users.filter(p => p.id != req.params.id); 
-    fs.writeFileSync('./data.json', JSON.stringify(parsed));  
+// CREATE - add user
+app.post('/adduser', async (req, res) => {
+    const user = new User(req.body);
+    await user.save();
+    res.send('User added!');
+});
+
+// UPDATE - edit user by id
+app.put('/users/:id', async (req, res) => {
+    const user = await User.findOneAndUpdate(
+        { id: req.params.id },
+        req.body,
+        { new: true }
+    );
+    if (!user) return res.status(404).send('User not found');
+    res.send('User updated!');
+});
+
+// DELETE - remove user by id
+app.delete('/users/:id', async (req, res) => {
+    await User.findOneAndDelete({ id: req.params.id });
     res.send('User deleted!');
 });
 
-//UPDATE - id
-app.put('/users/:id', (req,res) => {
-  const data = fs.readFileSync('./data.json', 'utf-8');
-  const parsed = JSON.parse(data);
-  const index = parsed.users.findIndex( p => p.id == req.params.id); 
-  if(index === -1)
-    return res.status(404).send('User not found');
-  parsed.users[index] = { ...parsed.users[index], ...req.body }; 
-  fs.writeFileSync('./data.json', JSON.stringify(parsed));
-  res.send('User updated');
+// =====================
+// ORDER ROUTES
+// =====================
+
+// READ - all orders
+app.get('/orders', async (req, res) => {
+    const orders = await Order.find();
+    res.json(orders);
 });
 
-//ORDER - get all
-app.get('/orders', (req, res) => {
-  const data = fs.readFileSync('./data.json', 'utf-8');
-  const parsed = JSON.parse(data);
-  res.json(parsed.orders);
+// CREATE - place order
+app.post('/addorder', async (req, res) => {
+    const order = new Order(req.body);
+    await order.save();
+    res.send('Order placed!');
 });
 
+// LOGIN - check email + password
+app.post('/login', async (req, res) => {
+    const { email, password } = req.body;
+    const user = await User.findOne({ email, password });
+    if (!user) return res.status(401).json({ message: 'Invalid email or password' });
+    res.json({ message: 'Login successful', user });
+});
 
-//ORDER - post
-app.post ('/addorder', (req,res) =>{
-    const data = fs.readFileSync('./data.json', 'utf-8');
-    const parse_data = JSON.parse(data);
-    parse_data.orders.push(req.body);  
-    fs.writeFileSync('./data.json', JSON.stringify(parse_data)) 
-    res.send("Status Added!")
-})
+// contact page route
+app.get('/contactus', (req, res) => {
+    res.json('This is Contact-Us page');
+});
 
+app.get('/', (req, res) => res.send('Ecommerce API is running'));
 
 app.listen(3000, () => {
-  console.log('Server running on port 3000');
+    console.log('Server running on port 3000');
 });
-
-
-
-

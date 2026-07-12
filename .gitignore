@@ -1,2 +1,4 @@
 node_modules/
 fix-images.js
+.env
+seed.js

@@ -68,3 +68,23 @@ function addToCart(productId, productName, productPrice) {
 }
 
 loadProducts();
+
+// dark/light theme toggle - saves preference to localStorage
+function toggleTheme() {
+    const body = document.body;
+    const btn = document.getElementById('theme-btn');
+    const isDark = body.classList.toggle('dark-mode');
+
+    // update button icon based on current mode
+    btn.textContent = isDark ? '☀️' : '🌙';
+
+    // save preference so it persists on refresh
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+}
+
+// apply saved theme on page load
+const savedTheme = localStorage.getItem('theme');
+if (savedTheme === 'dark') {
+    document.body.classList.add('dark-mode');
+    document.getElementById('theme-btn').textContent = '☀️';
+}
