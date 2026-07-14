@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment - ShopEasy</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header>
+        <nav>
+            <div class="nav-logo">🛍️ ShopEasy</div>
+            <div class="nav-links">
+                <a href="index.html"><button class="nav-btn">HOME</button></a>
+                <a href="index.html"><button class="nav-btn">FASHION</button></a>
+                <a href="index.html"><button class="nav-btn">ELECTRONICS</button></a>
+                <a href="index.html"><button class="nav-btn">WIRELESS</button></a>
+                <a href="contact.html"><button class="nav-btn">CONTACT US</button></a>
+            </div>
+            <div class="nav-icons">
+                <button class="theme-toggle" onclick="toggleTheme()" id="theme-btn">🌙</button>
+                <a href="cart.html"><button class="cart-btn">🛒 <span class="cart-count">0</span></button></a>
+                <a href="login.html"><button class="login-nav-btn">Login</button></a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- PAYMENT PAGE -->
+    <div class="payment-page" id="payment-page">
+
+        <!-- progress bar -->
+        <div class="checkout-steps">
+            <div class="step done">Cart</div>
+            <div class="step-line done"></div>
+            <div class="step done">Delivery</div>
+            <div class="step-line done"></div>
+            <div class="step active">Payment</div>
+            <div class="step-line"></div>
+            <div class="step">Confirmation</div>
+        </div>
+
+        <div class="payment-layout">
+
+            <!-- LEFT: payment methods -->
+            <div class="payment-methods-col">
+                <h2 class="pay-title">Choose Payment Method</h2>
+
+                <!-- COD -->
+                <label class="pay-option" id="opt-cod">
+                    <input type="radio" name="paymethod" value="cod" checked onchange="switchMethod('cod')">
+                    <div class="pay-option-icon">🏠</div>
+                    <div class="pay-option-text">
+                        <strong>Cash on Delivery</strong>
+                        <span>Pay when your order arrives</span>
+                    </div>
+                    <div class="pay-check">✓</div>
+                </label>
+
+                <!-- UPI -->
+                <label class="pay-option" id="opt-upi">
+                    <input type="radio" name="paymethod" value="upi" onchange="switchMethod('upi')">
+                    <div class="pay-option-icon">📱</div>
+                    <div class="pay-option-text">
+                        <strong>UPI</strong>
+                        <span>GPay, PhonePe, Paytm, BHIM</span>
+                    </div>
+                    <div class="pay-check">✓</div>
+                </label>
+
+                <!-- UPI input -->
+                <div class="pay-details" id="upi-details" style="display:none">
+                    <div class="pay-logos">
+                        <span class="pay-logo">G Pay</span>
+                        <span class="pay-logo">PhonePe</span>
+                        <span class="pay-logo">Paytm</span>
+                        <span class="pay-logo">BHIM</span>
+                    </div>
+                    <input type="text" id="upi-id" class="pay-input" placeholder="Enter UPI ID (e.g. name@upi)" />
+                    <span class="pay-hint">Enter any UPI ID linked to your bank</span>
+                </div>
+
+                <!-- CARD -->
+                <label class="pay-option" id="opt-card">
+                    <input type="radio" name="paymethod" value="card" onchange="switchMethod('card')">
+                    <div class="pay-option-icon">💳</div>
+                    <div class="pay-option-text">
+                        <strong>Credit / Debit Card</strong>
+                        <span>Visa, Mastercard, RuPay</span>
+                    </div>
+                    <div class="pay-check">✓</div>
+                </label>
+
+                <!-- Card input -->
+                <div class="pay-details" id="card-details" style="display:none">
+                    <div class="pay-logos">
+                        <span class="pay-logo">VISA</span>
+                        <span class="pay-logo">Mastercard</span>
+                        <span class="pay-logo">RuPay</span>
+                    </div>
+                    <input type="text" id="card-number" class="pay-input" placeholder="Card Number (16 digits)" maxlength="19" oninput="formatCard(this)" />
+                    <div class="card-row">
+                        <input type="text" id="card-expiry" class="pay-input" placeholder="MM / YY" maxlength="5" oninput="formatExpiry(this)" />
+                        <input type="text" id="card-cvv" class="pay-input" placeholder="CVV" maxlength="3" />
+                    </div>
+                    <input type="text" id="card-name" class="pay-input" placeholder="Name on Card" />
+                </div>
+
+                <!-- NET BANKING -->
+                <label class="pay-option" id="opt-netbanking">
+                    <input type="radio" name="paymethod" value="netbanking" onchange="switchMethod('netbanking')">
+                    <div class="pay-option-icon">🏦</div>
+                    <div class="pay-option-text">
+                        <strong>Net Banking</strong>
+                        <span>All major Indian banks supported</span>
+                    </div>
+                    <div class="pay-check">✓</div>
+                </label>
+
+                <!-- Net banking input -->
+                <div class="pay-details" id="netbanking-details" style="display:none">
+                    <select class="pay-input">
+                        <option value="">Select Your Bank</option>
+                        <option>State Bank of India</option>
+                        <option>HDFC Bank</option>
+                        <option>ICICI Bank</option>
+                        <option>Axis Bank</option>
+                        <option>Kotak Mahindra Bank</option>
+                        <option>Punjab National Bank</option>
+                        <option>Bank of Baroda</option>
+                        <option>Canara Bank</option>
+                    </select>
+                    <span class="pay-hint">You will be redirected to your bank's secure page</span>
+                </div>
+
+            </div>
+
+            <!-- RIGHT: order summary -->
+            <div class="payment-summary-col">
+                <div class="cart-summary-card">
+                    <h3>Order Summary</h3>
+                    <div id="pay-items-list"></div>
+                    <div class="summary-divider"></div>
+                    <div class="summary-row">
+                        <span>Subtotal</span>
+                        <span>₹<span id="pay-subtotal">0</span></span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Delivery</span>
+                        <span class="free-tag">FREE</span>
+                    </div>
+                    <div class="summary-divider"></div>
+                    <div class="summary-row summary-total">
+                        <span>Total</span>
+                        <span class="total-amount">₹<span id="pay-total">0</span></span>
+                    </div>
+
+                    <button class="place-order-btn" onclick="processPayment()">
+                        Pay Now
+                    </button>
+                    <a href="cart.html" class="continue-link">← Back to Cart</a>
+                </div>
+
+                <div class="pay-secure-note">
+                    🔒 100% Secure Payment — SSL Encrypted
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SUCCESS SCREEN (hidden initially) -->
+    <div class="success-screen" id="success-screen" style="display:none">
+        <div class="success-card">
+            <div class="success-icon">✓</div>
+            <h2>Order Placed!</h2>
+            <p class="success-sub">Thank you for shopping with ShopEasy</p>
+            <div class="success-order-id">Order ID: <strong id="order-id-display"></strong></div>
+            <div class="success-details">
+                <div class="success-row">
+                    <span>Payment</span>
+                    <span id="success-method">—</span>
+                </div>
+                <div class="success-row">
+                    <span>Amount</span>
+                    <span id="success-amount">—</span>
+                </div>
+                <div class="success-row">
+                    <span>Delivery</span>
+                    <span>3–5 Business Days</span>
+                </div>
+            </div>
+            <p class="success-redirect">Redirecting to home in <span id="countdown">3</span>s...</p>
+        </div>
+    </div>
+
+    <script src="theme.js"></script>
+    <script src="payment.js"></script>
+</body>
+</html>

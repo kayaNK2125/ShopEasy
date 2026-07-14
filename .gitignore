@@ -1,4 +1,7 @@
 node_modules/
-fix-images.js
 .env
 seed.js
+fix-images.js
+fix-all.js
+add-products.js
+update-images.js

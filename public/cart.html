@@ -2,38 +2,123 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cart - ShopEasy</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
+
+    <!-- NAVBAR -->
     <header>
         <nav>
             <div class="nav-logo">🛍️ ShopEasy</div>
             <div class="nav-links">
-                <a href="index.html"> <button class="nav-btn ">HOME</button> </a>
+                <a href="index.html"><button class="nav-btn">HOME</button></a>
                 <a href="index.html"><button class="nav-btn">FASHION</button></a>
                 <a href="index.html"><button class="nav-btn">ELECTRONICS</button></a>
                 <a href="index.html"><button class="nav-btn">WIRELESS</button></a>
-                <a href="contact.html"><button class="nav-btn">CONTACT-US</button></a>
+                <a href="contact.html"><button class="nav-btn">CONTACT US</button></a>
             </div>
-             <div class="nav-icons">
-               <a href="cart.html"><button class="cart-btn">🛒 <span class="cart-count">0</span></button></a>
+            <div class="nav-icons">
+                <button class="theme-toggle" onclick="toggleTheme()" id="theme-btn">🌙</button>
+                <a href="cart.html"><button class="cart-btn">🛒 <span class="cart-count">0</span></button></a>
                 <a href="login.html"><button class="login-nav-btn">Login</button></a>
             </div>
         </nav>
     </header>
 
-    <section class="cart-section">
-        <h2>Your Cart</h2>
-        <div id="cart-items">
-            <!-- cart items yahan load honge -->
+    <!-- CART PAGE -->
+    <section class="cart-page">
+        <div class="cart-page-header">
+            <h2>Your Cart</h2>
+            <span class="cart-page-count" id="item-count">0 items</span>
         </div>
-        <div class="cart-total">
-            <h3>Total: ₹<span id="total-price">0</span></h3>
-            <button class="hero-btn" onclick="placeOrder()">Place Order</button>
+
+        <div class="cart-layout">
+            <!-- LEFT: cart items + delivery address -->
+            <div class="cart-items-col">
+                <div id="cart-items"></div>
+
+                <!-- DELIVERY ADDRESS -->
+                <div class="delivery-section" id="delivery-section" style="display:none">
+                    <h4>📍 Delivery Address</h4>
+                    <div class="delivery-grid">
+                        <input type="text" id="del-name" placeholder="Full Name" />
+                        <input type="tel" id="del-phone" placeholder="Phone Number" />
+                        <input type="text" id="del-address" placeholder="House / Flat / Street" class="full-width" />
+                        <input type="text" id="del-city" placeholder="City" />
+                        <input type="text" id="del-pincode" placeholder="PIN Code" />
+                        <select id="del-state" class="full-width">
+                            <option value="">Select State</option>
+                            <option>Maharashtra</option>
+                            <option>Delhi</option>
+                            <option>Karnataka</option>
+                            <option>Tamil Nadu</option>
+                            <option>Gujarat</option>
+                            <option>Rajasthan</option>
+                            <option>Uttar Pradesh</option>
+                            <option>West Bengal</option>
+                            <option>Telangana</option>
+                            <option>Kerala</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RIGHT: order summary -->
+            <div class="cart-summary-col">
+                <div class="cart-summary-card">
+                    <h3>Order Summary</h3>
+
+                    <div class="summary-row">
+                        <span>Subtotal</span>
+                        <span>₹<span id="total-price">0</span></span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Delivery</span>
+                        <span class="free-tag">FREE</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Discount</span>
+                        <span class="discount-tag">− ₹0</span>
+                    </div>
+
+                    <div class="summary-divider"></div>
+
+                    <div class="summary-row summary-total">
+                        <span>Total</span>
+                        <span class="total-amount">₹<span id="grand-total">0</span></span>
+                    </div>
+
+                    <button class="place-order-btn" onclick="syncAndOrder()">
+                        Place Order
+                    </button>
+
+                    <a href="index.html" class="continue-link">← Continue Shopping</a>
+                </div>
+
+                <!-- TRUST BADGES -->
+                <div class="trust-badges">
+                    <div class="trust-badge">🔒 Secure Checkout</div>
+                    <div class="trust-badge">🚚 Free Delivery</div>
+                    <div class="trust-badge">↩️ Easy Returns</div>
+                </div>
+            </div>
         </div>
     </section>
 
+    <script src="theme.js"></script>
     <script src="cart.js"></script>
+    <script>
+        // keep grand-total in sync with total-price
+        const observer = new MutationObserver(() => {
+            const val = document.getElementById('total-price').textContent;
+            document.getElementById('grand-total').textContent = val;
+        });
+        observer.observe(document.getElementById('total-price'), { childList: true });
+
+        function syncAndOrder() { placeOrder(); }
+    </script>
 </body>
 </html>

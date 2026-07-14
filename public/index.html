@@ -14,15 +14,15 @@
         <nav>
             <div class="nav-logo">🛍️ ShopEasy</div>
             <div class="nav-links">
-               <a href="index.html"> <button class="nav-btn ">HOME</button> </a>
+                <a href="index.html"><button class="nav-btn active">HOME</button></a>
                 <button class="nav-btn" onclick="filterProducts('fashion', this)">FASHION</button>
                 <button class="nav-btn" onclick="filterProducts('electronics', this)">ELECTRONICS</button>
                 <button class="nav-btn" onclick="filterProducts('wireless', this)">WIRELESS</button>
-                <a href="contact.html"><button class="nav-btn">CONTACT-US</button></a>
+                <a href="contact.html"><button class="nav-btn">CONTACT US</button></a>
             </div>
             <div class="nav-icons">
                 <button class="theme-toggle" onclick="toggleTheme()" id="theme-btn">🌙</button>
-               <a href="cart.html"><button class="cart-btn">🛒 <span class="cart-count">0</span></button></a>
+                <a href="cart.html"><button class="cart-btn">🛒 <span class="cart-count">0</span></button></a>
                 <a href="login.html"><button class="login-nav-btn">Login</button></a>
             </div>
         </nav>
@@ -31,25 +31,108 @@
     <!-- HERO SECTION -->
     <section class="hero">
         <div class="hero-content">
-            <h1>Shop the Best Deals</h1>
-            <p>Discover thousands of products at unbeatable prices</p>
-            <button class="hero-btn">Shop Now</button>
+            <div class="hero-badge">✦ New Arrivals Every Week</div>
+            <h1 class="hero-title">Shop Smart.<br><span class="hero-gold">Live Better.</span></h1>
+            <p class="hero-subtitle">Discover top picks in Fashion, Electronics &amp; Wireless — all in one place.</p>
+
+            <!-- SEARCH BAR -->
+            <div class="hero-search">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="search-input" placeholder="Search for products, brands..." oninput="searchProducts(this.value)">
+                <button class="search-clear" id="clear-btn" onclick="clearSearch()">✕</button>
+            </div>
+
+            <!-- STATS ROW -->
+            <div class="hero-stats">
+                <div class="hero-stat">
+                    <span>8+</span>
+                    <p>Products</p>
+                </div>
+                <div class="hero-divider"></div>
+                <div class="hero-stat">
+                    <span>3</span>
+                    <p>Categories</p>
+                </div>
+                <div class="hero-divider"></div>
+                <div class="hero-stat">
+                    <span>4.6★</span>
+                    <p>Avg Rating</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SHOP BY CATEGORY -->
+    <section class="categories-section">
+        <h2 class="section-title" style="text-align:center">Shop by Category</h2>
+        <div class="categories-grid">
+            <div class="cat-card fashion-cat" onclick="filterCategory('fashion')">
+                <span class="cat-icon">👗</span>
+                <h3>Fashion</h3>
+                <p>Shirts, Watches &amp; More</p>
+                <span class="cat-arrow">→</span>
+            </div>
+            <div class="cat-card electronics-cat" onclick="filterCategory('electronics')">
+                <span class="cat-icon">📱</span>
+                <h3>Electronics</h3>
+                <p>Phones, Laptops &amp; Tablets</p>
+                <span class="cat-arrow">→</span>
+            </div>
+            <div class="cat-card wireless-cat" onclick="filterCategory('wireless')">
+                <span class="cat-icon">🎧</span>
+                <h3>Wireless</h3>
+                <p>Earbuds, Speakers &amp; More</p>
+                <span class="cat-arrow">→</span>
+            </div>
         </div>
     </section>
 
     <!-- PRODUCTS SECTION -->
-    <section class="products-section">
-        <h2 class="section-title">Featured Products</h2>
+    <section class="products-section" id="products-section">
+        <div class="section-header">
+            <h2 class="section-title" style="margin-bottom:0">Featured Products</h2>
+            <button class="view-all-btn" onclick="showAllProducts()">View All</button>
+        </div>
         <div class="products-grid" id="products-grid">
-            <!-- Products will load from API -->
+            <!-- Products load from backend API -->
+        </div>
+    </section>
+
+    <!-- WHY SHOP WITH US -->
+    <section class="features-section">
+        <h2 class="section-title">Why ShopEasy?</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <span class="feature-icon">🚚</span>
+                <h3>Fast Delivery</h3>
+                <p>Get your orders within 2–5 business days, right to your door</p>
+            </div>
+            <div class="feature-card">
+                <span class="feature-icon">🔒</span>
+                <h3>Secure Payments</h3>
+                <p>Every transaction is encrypted and 100% secure</p>
+            </div>
+            <div class="feature-card">
+                <span class="feature-icon">↩️</span>
+                <h3>Easy Returns</h3>
+                <p>30-day no-questions-asked return policy on all products</p>
+            </div>
+            <div class="feature-card">
+                <span class="feature-icon">💬</span>
+                <h3>24/7 Support</h3>
+                <p>Our team is always available when you need us</p>
+            </div>
         </div>
     </section>
 
     <!-- FOOTER -->
     <footer>
+        <div class="footer-brand">🛍️ ShopEasy</div>
+        <p>Built with Node.js, Express &amp; MongoDB Atlas</p>
         <p>© 2025 ShopEasy. All rights reserved.</p>
     </footer>
 
+    <script src="theme.js"></script>
     <script src="app.js"></script>
 </body>
 </html>

@@ -86,7 +86,7 @@ async function login() {
     if (!password) { showError('login-pass-error', 'Password is required'); return; }
 
     try {
-        const response = await fetch('http://localhost:3000/login', {
+        const response = await fetch('/login', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email, password })
@@ -133,7 +133,7 @@ async function register() {
     if (!valid) return;
 
     try {
-        await fetch('http://localhost:3000/adduser', {
+        await fetch('/adduser', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
