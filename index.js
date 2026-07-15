@@ -8,10 +8,11 @@ app.use(express.json());
 app.use(cors());
 
 // connect to MongoDB Atlas
-mongoose.connect(process.env.MONGO_URI)
-    .then(() => console.log('Connected to MongoDB Atlas!'))
-    .catch(err => console.log('MongoDB connection error:', err));
-
+mongoose.connect(process.env.MONGO_URI, {
+    serverSelectionTimeoutMS: 30000
+})
+.then(() => console.log("Connected to MongoDB Atlas!"))
+.catch(err => console.error("MongoDB connection error:", err));
 // =====================
 // SCHEMAS & MODELS
 // =====================
@@ -50,6 +51,20 @@ const Order = mongoose.model('Order', orderSchema);
 // =====================
 // PRODUCT ROUTES
 // =====================
+
+app.use(async (req, res, next) => {
+    if (mongoose.connection.readyState !== 1) {
+        try {
+            await mongoose.connect(process.env.MONGO_URI);
+        } catch (err) {
+            return res.status(500).json({
+                error: "Database connection failed"
+            });
+        }
+    }
+    next();
+});
+
 
 // READ - all products
 app.get('/products', async (req, res) => {
