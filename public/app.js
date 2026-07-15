@@ -15,7 +15,7 @@ const categoryClass = {
 // fetch all products from backend and display them
 async function loadProducts() {
     try {
-        const response = await fetch('http://localhost:3000/products');
+        const response = await fetch('/products');
         allProducts = await response.json();
         displayProducts(allProducts);
     } catch (error) {
