@@ -17,3 +17,26 @@ function toggleTheme() {
 }
 
 applyTheme();
+
+// update navbar based on login state — runs on every page
+function updateAuthNav() {
+    const btn = document.querySelector('.login-nav-btn');
+    if (!btn) return;
+
+    const user = JSON.parse(localStorage.getItem('loggedInUser') || 'null');
+    if (user) {
+        // logged in — show first name + turn button into Logout
+        const firstName = (user.name || 'User').split(' ')[0];
+        btn.textContent = 'Hi, ' + firstName + ' • Logout';
+        btn.onclick = function (e) {
+            e.preventDefault();
+            localStorage.removeItem('loggedInUser');
+            window.location.href = 'index.html';
+        };
+        // stop the surrounding <a href="login.html"> from navigating
+        const link = btn.closest('a');
+        if (link) link.removeAttribute('href');
+    }
+}
+
+updateAuthNav();

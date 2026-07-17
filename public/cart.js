@@ -67,6 +67,11 @@ function updateSummary() {
 
     document.getElementById('item-count').textContent  = `${totalQty} item${totalQty !== 1 ? 's' : ''}`;
     document.getElementById('total-price').textContent = totalPrice.toLocaleString('en-IN');
+
+    // delivery is free, so grand total = subtotal (set directly, don't rely on observer)
+    const grand = document.getElementById('grand-total');
+    if (grand) grand.textContent = totalPrice.toLocaleString('en-IN');
+
     updateCartCount();
 }
 
