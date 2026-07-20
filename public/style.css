@@ -1516,3 +1516,98 @@ body.dark-mode .delivery-grid select {
 }
 
 .switch-text span:hover { text-decoration: underline; }
+
+/* =====================
+   RESPONSIVE / MOBILE
+   Works on laptop, iPad, Android, iPhone, and small flip phones.
+   Added at the end so these rules override the desktop styles above.
+   ===================== */
+
+/* ---- TABLET / iPad (up to 1024px) ---- */
+@media (max-width: 1024px) {
+    nav { padding: 1rem 1.2rem; }
+
+    /* cart & payment: summary drops below the items instead of sitting beside */
+    .cart-layout,
+    .payment-layout {
+        grid-template-columns: 1fr;
+    }
+
+    /* features: 4 across -> 2 across */
+    .features-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .hero-title { font-size: 3rem; }
+}
+
+/* ---- PHONES: Android / iPhone (up to 768px) ---- */
+@media (max-width: 768px) {
+    /* navbar stacks and wraps so nothing gets cut off */
+    nav {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.6rem;
+        padding: 0.8rem 1rem;
+    }
+    .nav-links {
+        order: 3;
+        flex-wrap: wrap;
+        justify-content: center;
+        width: 100%;
+    }
+    .nav-btn { font-size: 0.8rem; padding: 0.4rem 0.8rem; }
+
+    /* hero text scales down */
+    .hero { padding-left: 1rem; padding-right: 1rem; }
+    .hero-title { font-size: 2.2rem; }
+    .hero-subtitle { font-size: 1rem; }
+    .hero-search { max-width: 100%; }
+
+    /* categories: 3 across -> 1 column */
+    .categories-grid { grid-template-columns: 1fr; }
+
+    /* products: at least fit one clean column */
+    .products-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
+
+    /* features: 2 across -> 1 column */
+    .features-grid { grid-template-columns: 1fr; }
+
+    /* delivery address form: 2 columns -> 1 */
+    .delivery-grid { grid-template-columns: 1fr; }
+
+    /* cart item: stack image, info, and controls vertically */
+    .cart-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.8rem;
+    }
+
+    /* checkout step bar can wrap on small screens */
+    .checkout-steps { flex-wrap: wrap; }
+
+    /* login / contact split -> stacked, hide the big brand panel */
+    .auth-section { flex-direction: column; }
+    .auth-left { display: none; }
+    .auth-right { width: 100%; padding: 2rem 1.2rem; }
+
+    /* general page side padding */
+    .cart-page,
+    .payment-page { padding-left: 1rem; padding-right: 1rem; }
+}
+
+/* ---- SMALL / FLIP PHONES (up to 380px) ---- */
+@media (max-width: 380px) {
+    .hero-title { font-size: 1.8rem; }
+    .nav-logo { font-size: 1.2rem; }
+    .nav-btn { font-size: 0.72rem; padding: 0.35rem 0.6rem; }
+
+    /* products: single column so cards never overflow */
+    .products-grid { grid-template-columns: 1fr; }
+
+    /* card expiry + CVV stack instead of sitting side by side */
+    .card-row { grid-template-columns: 1fr; }
+
+    .auth-card { padding: 1.5rem; }
+    .cart-summary-card { padding: 1.2rem; }
+}
