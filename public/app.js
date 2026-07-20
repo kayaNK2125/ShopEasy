@@ -146,4 +146,3 @@ function showToast(message) {
 
 loadProducts();
 
-// theme toggle lives in theme.js — loaded on all pages
